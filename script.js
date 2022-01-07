@@ -18,16 +18,18 @@ const fetchWeather = (weather) => {
     .then((result) => {
       // Convert Json to JS object
       const res = JSON.parse(result);
-      const temp = res.main.temp;
-      const humidity = res.main.humidity;
-      const speed = res.wind.speed;
-      const description = res.weather[0].description
+      const temp = kelvinToCelsius(res.main.temp) || "";
+      const humidity = res.main.humidity || "";
+      const speed = res.wind.speed || "";
+      const description = res.weather[0].description || "";
       setBackground(res);
-      document.getElementById("temp").innerHTML = `${kelvinToCelsius(temp)}°C`;
+      document.getElementById("temp").innerHTML = `${temp}°C`;
       document.getElementById("city").innerHTML = `Weather in ${res.name}`;
       document.getElementById("humidity").innerHTML = `Humidity ${humidity}`;
       document.getElementById("wind").innerHTML = `Windspeed ${speed}`;
-      document.getElementById("description").innerHTML = `Conditions ${description}`;
+      document.getElementById(
+        "description"
+      ).innerHTML = `Conditions ${description}`;
     })
     .catch((error) => {
       alert("Town Not Found");
